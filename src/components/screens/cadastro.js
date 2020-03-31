@@ -1,8 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 import firebase from "../shared/firebaseConnection";
 
+import {useHistory} from "react-router-dom"; 
+
 export default function App(){
+  let history = useHistory();
   const [log, setLog] = useState([])
   
   const changeLog = (e) => {
@@ -14,22 +17,21 @@ export default function App(){
 
   const createUser = (e) => {
     firebase.auth().signOut();
+
+    firebase.auth().onAuthStateChanged((user)=>{
+        if(user){
+          history.push("/home");
+        }else{
+          history.push("/");
+        }
+      })
+
     firebase.auth().createUserWithEmailAndPassword(log.email, log.password)
     .catch((error)=>{
       alert(error);
     })
     e.preventDefault();
   }
-
-  useEffect(()=>{
-    firebase.auth().onAuthStateChanged((user)=>{
-      if(user){
-        alert(user.uid);
-      }else{
-        alert("não está logado!");
-      }
-    })
-  }, [])
 
   return(
     <div>
