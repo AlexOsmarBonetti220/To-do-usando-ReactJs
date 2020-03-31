@@ -20,6 +20,9 @@ export default function App(){
 
     firebase.auth().onAuthStateChanged((user)=>{
         if(user){
+          firebase.database().ref("users").child(user.uid).set({
+            nome:log.name
+          })
           history.push("/home");
         }else{
           history.push("/");
