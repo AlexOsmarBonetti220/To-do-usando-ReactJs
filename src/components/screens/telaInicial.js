@@ -8,7 +8,7 @@ export default function TelaInicial(){
     let history = useHistory();
     const [nome, setNome] = useState("");
     const [todo, setTodo] = useState([]);
-    const [tarefas, setTarefas] = useState([]);
+    let [tarefas, setTarefas] = useState([]);
     const [uid, setUid] = useState(0);
     const changeToDo = (e) => {
         setTodo({
@@ -21,9 +21,23 @@ export default function TelaInicial(){
         let key = userTodo.push().key;
         userTodo.child(key).set({
             todoName: todo.todoName,
-            todoDescription: todo.todoDescription
+            todoDescription: todo.todoDescription,
+            todoCompleted:false
         })
         e.preventDefault();
+    }
+    const completarTarefa = (todoKey) => {
+        //Entrando no firebase e completando a tarefa
+        if(uid !== 0)
+            firebase.database().ref("todo").child(uid).child(todoKey).child("todoCompleted").set(true);
+        else
+            alert("Erro ao completar tarefa!");    
+    }
+    const removerTarefa = (todoKey) => {
+        if(uid != 0)
+            firebase.database().ref("todo").child(uid).child(todoKey).child("todoCompleted").set(false);
+        else
+            alert("Erro ao desmarcar tarefa");
     }
 
     const signOut = () => {
@@ -43,17 +57,17 @@ export default function TelaInicial(){
                 })
                 //Pegando os dados das tarefas no firebase
                 firebase.database().ref("todo").child(user.uid).on("value", (snapshot)=>{
+                    tarefas = [];
                     snapshot.forEach((child)=>{
                         //Coloco no array
                         tarefas.push({
                             todoName:child.val().todoName,
                             todoDescription:child.val().todoDescription,
+                            todoCompleted:child.val().todoCompleted,
                             todoKey:child.key
                         })
                     })
                     setTarefas([...tarefas, tarefas]);
-                },error => {
-                    alert(error);
                 })
             }
         })
@@ -81,7 +95,7 @@ export default function TelaInicial(){
                 {tarefas.map((tarefa)=>{
                     return(
                         <div key={tarefa.todoKey}>
-                            <h4>{tarefa.todoKey}</h4>
+                            <div onClick={()=>completarTarefa(tarefa.todoKey)} onDoubleClick={()=>removerTarefa(tarefa.todoKey)} style={{width:tarefa.todoKey !== undefined ? 20:0, height:tarefa.todoKey !== undefined ? 20:0, backgroundColor:tarefa.todoCompleted == true?"green":"red"}}></div>
                             <h3>{tarefa.todoName}</h3>
                             <p>{tarefa.todoDescription}</p>
                         </div>
