@@ -4,6 +4,8 @@ import {useHistory} from 'react-router-dom';
 
 import firebase from "../shared/firebaseConnection";
 
+import "./style.css";
+
 export default function Login(){
     let history = useHistory();
     const [log, setLog] = useState([]);
@@ -34,17 +36,17 @@ export default function Login(){
 
     return(
         <div>
-            <form onSubmit={sigInUser}>
-                <div>
-                    <label htmlFor="email">Digite seu email: </label>
-                    <input type="email" id="email" name="email" value={log.email} onChange={changeLog} /><br/><br/>
-                    <label htmlFor="password">Digite sua senha: </label>
-                    <input type="password" id="password" name="password" value={log.password} onChange={changeLog} /><br/><br/>
-                </div>
-                <div>
-                    <input type="submit" />
-                </div>
-            </form>
-        </div>
+        <form onSubmit={sigInUser}>
+          <div>
+            <label htmlFor="email">Digite seu email: </label>
+            <input type="email" id="email" name="email" placeholder="user@domain.com" onChange={changeLog} /><br/><br/>
+            <label htmlFor="password">Digite a sua senha: </label>
+            <input type="password" id="password" name="password" onChange={changeLog} /><br/><br/>
+          </div>
+          <div>
+            <input type="submit" />
+          </div>
+        </form>
+      </div>
     )
 }

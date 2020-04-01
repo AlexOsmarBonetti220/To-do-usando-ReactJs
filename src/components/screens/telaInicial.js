@@ -10,22 +10,8 @@ export default function TelaInicial(){
     const [todo, setTodo] = useState([]);
     let [tarefas, setTarefas] = useState([]);
     const [uid, setUid] = useState(0);
-    const changeToDo = (e) => {
-        setTodo({
-            ...todo,
-            [e.currentTarget.name]:e.currentTarget.value
-        })
-    }
-    const addToDo = (e) => {
-        let userTodo = firebase.database().ref("todo").child(uid);
-        let key = userTodo.push().key;
-        userTodo.child(key).set({
-            todoName: todo.todoName,
-            todoDescription: todo.todoDescription,
-            todoCompleted:false
-        })
-        e.preventDefault();
-    }
+    const [load, setLoad] = useState(false);
+
     const completarTarefa = (todoKey) => {
         //Entrando no firebase e completando a tarefa
         if(uid !== 0)
@@ -33,12 +19,20 @@ export default function TelaInicial(){
         else
             alert("Erro ao completar tarefa!");    
     }
-    const removerTarefa = (todoKey) => {
-        if(uid != 0)
+
+    const descompletarTarefa = (todoKey) => {
+        if(uid !== 0)
             firebase.database().ref("todo").child(uid).child(todoKey).child("todoCompleted").set(false);
         else
             alert("Erro ao desmarcar tarefa");
     }
+
+    const removerTarefa = (todoKey) => {
+        if(uid !== 0){
+            firebase.database().ref("todo").child(uid).child(todoKey).remove();
+        }else
+            alert("Erro ao remover tarefa!");
+    }   
 
     const signOut = () => {
         firebase.auth().signOut();
@@ -68,41 +62,46 @@ export default function TelaInicial(){
                         })
                     })
                     setTarefas([...tarefas, tarefas]);
+                    setLoad(true);
                 })
             }
         })
     }, [])
-    return(
-        <div>
+    if(load){
+        return(
             <div>
-                <h1>To do online</h1>
-                <h3>Bem vindo, {nome}</h3>
+                <div>
+                    <h1>To do online</h1>
+                    <h3>Bem vindo, {nome}</h3>
+                    <input type="button" value="Sair" onClick={signOut} />
+                </div>
+                <div>
+                    {tarefas.map((tarefa)=>{
+                        if(tarefa.todoKey !== undefined){
+                            return(
+                                <div key={tarefa.todoKey}>
+                                    <div onClick={()=>completarTarefa(tarefa.todoKey)} onDoubleClick={()=>descompletarTarefa(tarefa.todoKey)} style={{width:20, height:20, backgroundColor:tarefa.todoCompleted === true?"green":"red"}}></div>
+                                    <h3>{tarefa.todoName}</h3>
+                                    <p>{tarefa.todoDescription}</p>
+                                    <span onClick={()=>removerTarefa(tarefa.todoKey)}>X</span>
+                                </div>
+                            )
+                        }else
+                            return null
+                    })}
+                </div>
+                <div>
+                    <button type="button" onClick={()=>{
+                        history.push("/addToDo");
+                    }}>+ Tarefa</button> 
+                </div>
             </div>
+        )
+    }else{
+        return(
             <div>
-                <form onSubmit={addToDo}>
-                    <div>
-                        <label htmlFor="todoName">Digite o nome da tarefa: </label>
-                        <input type="text" id="todoName" value={todo.todoName} name="todoName" onChange={changeToDo} /><br/><br/>
-                        <label htmlFor="todoDescription">Digite a descrição da tarefa: </label><br/>
-                        <textarea id="todoDescription" value={todo.todoDescription} name="todoDescription" onChange={changeToDo}></textarea>
-                    </div>
-                    <div>
-                        <input type="submit" />
-                    </div>
-                </form>
+                <h2>Loading...</h2>
             </div>
-            <div>
-                {tarefas.map((tarefa)=>{
-                    return(
-                        <div key={tarefa.todoKey}>
-                            <div onClick={()=>completarTarefa(tarefa.todoKey)} onDoubleClick={()=>removerTarefa(tarefa.todoKey)} style={{width:tarefa.todoKey !== undefined ? 20:0, height:tarefa.todoKey !== undefined ? 20:0, backgroundColor:tarefa.todoCompleted == true?"green":"red"}}></div>
-                            <h3>{tarefa.todoName}</h3>
-                            <p>{tarefa.todoDescription}</p>
-                        </div>
-                    )
-                })}
-            </div>
-            <button type="button" onClick={signOut}>Sair</button>
-        </div>
-    )
+        )
+    }
 }

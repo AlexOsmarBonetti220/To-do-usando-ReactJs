@@ -1,0 +1,15 @@
+.corpo{
+    position:absolute;
+    left:50%;
+    top:20%;
+    margin-left:-150px;
+    text-align: center;
+}
+
+.form{
+    position:absolute;
+    left:50%;
+    top:10%;
+    margin-left:-95px;
+    text-align: center;
+}

@@ -7,6 +7,7 @@ import LoginScreen from './components/screens/login';
 import HomeScreen from "./components/screens/home";
 import InicialScreen from "./components/screens/telaInicial";
 import NotFoundScreen from "./components/screens/notFound";
+import addToDoScreen from './components/screens/addToDo';
 
 export default function Routes(){
     return(
@@ -16,6 +17,7 @@ export default function Routes(){
                 <Route exact path="/home" component={InicialScreen} />
                 <Route exact path="/register" component={CadastroScreen} />
                 <Route exact path="/login" component={LoginScreen} />
+                <Route exact path="/addToDo" component={addToDoScreen} />
                 <Route path="*" component={NotFoundScreen} />
             </Switch>
         </BrowserRouter>

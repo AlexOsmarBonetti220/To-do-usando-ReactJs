@@ -2,6 +2,8 @@ import React from "react";
 
 import {useHistory} from 'react-router-dom';
 
+import "./style.css";
+
 export default function Home(){
     let history = useHistory();
     const gotoLogin = () => {
@@ -11,9 +13,9 @@ export default function Home(){
         history.push("/register");
     }
     return(
-        <div>
+        <div className="corpo">
             <div>
-                <h2>Super Sitemas</h2>
+                <img src="https://sanet.pics/storage-3/0917/Dj0Ev6sEnlvnQzzRmCVdblxmPHWlidTV.png" />
             </div>
             <div>
                 <button type="button" onClick={gotoLogin} >Login</button>
