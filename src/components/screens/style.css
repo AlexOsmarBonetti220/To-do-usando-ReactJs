@@ -10,3 +10,46 @@
 .area-botoes{
     padding-top: 20px;
 }
+
+.quadrado{
+    position: relative;
+    top:25px;
+    left:200px;
+}
+
+.todoItem{
+    background-color: #C6C6C6;
+    margin-bottom:5px;
+    padding:10px;
+}
+
+.link{
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color:#FF0000;
+}
+
+.link:hover{
+    text-decoration: underline;
+    cursor: pointer;
+    color:#FFFFFF;
+}
+
+.todoDescription{
+    font-size:15px;
+    font-weight:bold;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.titulo{
+    font-size:20px;
+    font-weight: bold;
+    text-align:center;
+}
+
+.titulos-area{
+    padding-bottom: 20px;
+    padding-top:20px;
+}

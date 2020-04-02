@@ -1,0 +1,13 @@
+Route exact path="/edit:id component={editScreen} //Para concluir
+
+//No map
+
+tarefas.map((tarefa)=>{
+	return(
+		...
+		<div onClick={()=>history.push(`/edit${tarefa.keyToDo}`)}>Editar</div>
+
+
+//No outro component
+
+let {id} = useParams();
