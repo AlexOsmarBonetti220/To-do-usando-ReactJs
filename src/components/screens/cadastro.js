@@ -37,34 +37,34 @@ export default function App(){
   }
 
   return(
-    <div className="form">
+    <div className="corpo">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.8.1/css/bulma.min.css" />
       <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
       <h4 style={{ fontSize: 30, paddingBottom: 20 }}>Faça seu cadastro</h4>
       <form onSubmit={createUser}>
         <div>
-          <div class="field">
-            <label class="label">Name</label>
-            <div class="control">
-              <input class="input" type="text" placeholder="Text input" />
+          <div className="field">
+            <label className="label">Name</label>
+            <div className="control">
+              <input className="input" type="text" placeholder="Name: " />
             </div>
           </div>
-          <div class="field">
-            <label class="label">Username</label>
-            <div class="control">
-              <input class="input is-success" type="text" placeholder="Text input" />
+          <div className="field">
+            <label className="label">Username</label>
+            <div className="control">
+              <input className="input is-success" type="text" placeholder="Username: " />
             </div>
           </div>
-          <div class="field">
-            <label class="label">Email</label>
-            <div class="control">
-              <input class="input is-danger" type="email" placeholder="Email input" />
+          <div className="field">
+            <label className="label">Email</label>
+            <div className="control">
+              <input className="input is-danger" type="email" placeholder="Email: " />
             </div>
           </div>
-          <div class="field">
-            <label class="label">Password</label>
-            <p class="control">
-              <input class="input" type="password" placeholder="Password" />
+          <div className="field">
+            <label className="label">Password</label>
+            <p className="control">
+              <input className="input" type="password" placeholder="Password: " />
             </p>
           </div>
         </div>
