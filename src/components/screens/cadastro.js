@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 
 import firebase from "../shared/firebaseConnection";
 
-import {useHistory} from "react-router-dom"; 
+import {useHistory} from "react-router-dom";
 
 export default function App(){
   let history = useHistory();
   const [log, setLog] = useState([])
-  
+
   const changeLog = (e) => {
     setLog({
       ...log,
@@ -17,23 +17,23 @@ export default function App(){
 
   const createUser = (e) => {
     firebase.auth().signOut();
-
     firebase.auth().onAuthStateChanged((user)=>{
         if(user){
           firebase.database().ref("users").child(user.uid).set({
-            nome:log.name
+            nome:log.name,
+            userName:log.username
           })
           history.push("/home");
         }else{
-          history.push("/");
+            history.push("/");
         }
       })
 
-    firebase.auth().createUserWithEmailAndPassword(log.email, log.password)
-    .catch((error)=>{
-      alert(error);
-    })
-    e.preventDefault();
+      firebase.auth().createUserWithEmailAndPassword(log.email, log.password)
+      .catch((error)=>{
+        alert(error);
+      })
+      e.preventDefault();
   }
 
   return(
@@ -44,27 +44,27 @@ export default function App(){
       <form onSubmit={createUser}>
         <div>
           <div className="field">
-            <label className="label">Name</label>
+            <label htmlFor="name" className="label">Name</label>
             <div className="control">
-              <input className="input" type="text" placeholder="Name: " />
+              <input id="name" name="name" className="input is-primary" type="text" placeholder="Name: " onChange={changeLog} />
             </div>
           </div>
           <div className="field">
-            <label className="label">Username</label>
+            <label htmlFor="username" className="label">Username</label>
             <div className="control">
-              <input className="input is-success" type="text" placeholder="Username: " />
+              <input id="username" name="username" className="input is-info" type="text" placeholder="Username: " onChange={changeLog} />
             </div>
           </div>
           <div className="field">
-            <label className="label">Email</label>
+            <label htmlFor="email" className="label">Email</label>
             <div className="control">
-              <input className="input is-danger" type="email" placeholder="Email: " />
+              <input id="email" name="email" className="input is-success" type="email" placeholder="Email: " onChange={changeLog} />
             </div>
           </div>
           <div className="field">
-            <label className="label">Password</label>
+            <label htmlFor="password" className="label">Password</label>
             <p className="control">
-              <input className="input" type="password" placeholder="Password: " />
+              <input id="password" name="password" className="input" className="input is-danger" type="password" placeholder="Password: " onChange={changeLog} />
             </p>
           </div>
         </div>
@@ -75,4 +75,3 @@ export default function App(){
     </div>
   )
 }
-

@@ -84,9 +84,12 @@ export default function OpcoesTarefa(){
             </nav>
             <div className="corpo">
                 <div>
-                    <h1>Tarefa</h1>
-                    <h3>{name}</h3>
-                    <p>{description}</p>
+                    <h1 className="titulo-grande">Tarefa</h1>
+                    <label className="label">Nome</label>
+                    <h3 style={{color:"#0000FF"}} className="titulo">{name}</h3>
+                    <br/>
+                    <label className="label">Descrição</label>
+                    <p style={{color:"#FF0000"}} className="todoDescription">{description}</p>
                 </div>
                 <hr/>
             </div>

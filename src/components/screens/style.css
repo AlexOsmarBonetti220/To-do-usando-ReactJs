@@ -11,10 +11,10 @@
     padding-top: 20px;
 }
 
-.quadrado{
-    position: relative;
-    top:25px;
-    left:200px;
+#add-tarefa{
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .todoItem{
@@ -40,16 +40,25 @@
     font-size:15px;
     font-weight:bold;
     text-align: center;
-    color: #FFFFFF;
+    color: #000000;
 }
 
 .titulo{
     font-size:20px;
     font-weight: bold;
     text-align:center;
+    color: #000000;
 }
 
 .titulos-area{
     padding-bottom: 20px;
     padding-top:20px;
+}
+
+.titulo-grande{
+  font-size: 25px;
+  font-weight: bold;
+  color:#000000;
+  text-align:center;
+  padding-bottom:20px
 }
